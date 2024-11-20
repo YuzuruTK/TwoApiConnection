@@ -13,8 +13,5 @@ RUN go mod download
 # Copy the entire project into the working directory
 COPY . .
 
-# Build the Go app (output will be an executable named "app")
-RUN go build -o app .
-
-# Run the executable
-CMD ["./app"]
+# Set the default command to build and run the Go app
+CMD ["go", "run", "."]
