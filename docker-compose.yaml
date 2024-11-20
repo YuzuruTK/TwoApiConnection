@@ -1,0 +1,15 @@
+services:
+  golang:
+    build:
+      context: ./go_api/
+    volumes:
+      - ./go_api:/usr/app/
+    ports:
+      - "5000:5000"
+    networks:
+      - dev-net
+    environment:
+      - PORT=8000
+networks:
+  dev-net:
+    driver: bridge
