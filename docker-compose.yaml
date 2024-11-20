@@ -1,3 +1,5 @@
+version: 'latest'
+
 services:
   golang:
     build:
@@ -6,8 +8,8 @@ services:
       - ./go_api:/usr/app/
     ports:
       - "8000:8000"
-    networks:
-      - dev-net
+    env_file:
+      - .env
   python:
     build:
       context: ./python_api/
@@ -17,9 +19,7 @@ services:
       - "5000:5000"
     networks:
       - dev-net
+    env_file:
+      - .env
     environment:
       FLASK_APP: app.py
-      FLASK_ENV: development
-networks:
-  dev-net:
-    driver: bridge
