@@ -5,11 +5,21 @@ services:
     volumes:
       - ./go_api:/usr/app/
     ports:
+      - "8000:8000"
+    networks:
+      - dev-net
+  python:
+    build:
+      context: ./python_api/
+    volumes:
+      - ./python_api:/usr/app/
+    ports:
       - "5000:5000"
     networks:
       - dev-net
     environment:
-      - PORT=8000
+      FLASK_APP: app.py
+      FLASK_ENV: development
 networks:
   dev-net:
     driver: bridge
