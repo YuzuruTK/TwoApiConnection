@@ -2,33 +2,30 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
-	"encoding/json"
+	"io"
 	"log"
 	"math/rand"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
-func getHuman(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// func getHuman(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
 
-	json.NewEncoder(w).Encode(generateRandomHuman())
-}
-func getBeast(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(generateRandomHuman())
+// }
+// func getBeast(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
 
-	json.NewEncoder(w).Encode(generateRandomBeast())
-}
+// 	json.NewEncoder(w).Encode(generateRandomBeast())
+// }
 
-/*************  ✨ Codeium Command ⭐  *************/
-// generateRandomHuman returns a randomly generated HumanMonster based on
-// the values in the "human.csv" file. The generated HumanMonster will have
-// a randomly selected disposition, vitality, strength, willpower, dextery,
-// and goals. The armor, weapon, trait, ring, and trinket will also be
-// randomly selected based on the values in the "human.csv" file.
-/******  bff20cd9-0ba9-4cf9-8dfb-2ee0021890ba  *******/
 func generateRandomHuman() HumanMonster {
 	csv_file := "human.csv"
 	file, err := os.Open("csv/" + csv_file)
@@ -206,4 +203,66 @@ func rollDice(d int, s int) int {
 		dice += rand.Intn(d) + 1
 	}
 	return dice
+}
+
+func doPostRequest(url string, payload []byte) []byte {
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	API_KEY := os.Getenv("API_KEY")
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("X-Uploadthing-Api-Key", API_KEY)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	return body
+}
+
+func doPutRequest(url string, payload []byte) []byte {
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	API_KEY := os.Getenv("API_KEY")
+
+	uploadRequestBody := &bytes.Buffer{}
+	writer := multipart.NewWriter(uploadRequestBody)
+
+	// Create the multipart file part for the JSON file
+	part, err := writer.CreateFormFile("file", "sample.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Write the JSON data to the multipart form file part
+	_, err = part.Write(payload)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Close the writer to finish the multipart body
+	err = writer.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req, _ := http.NewRequest("PUT", url, uploadRequestBody)
+
+	req.Header.Add("Content-Type", writer.FormDataContentType())
+	req.Header.Add("X-Uploadthing-Api-Key", API_KEY)
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := io.ReadAll(res.Body)
+	println(string(body))
+	return body
 }

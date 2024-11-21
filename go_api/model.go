@@ -35,3 +35,27 @@ type BeastMonster struct {
 	Trait2      string `json:"trait2"`
 	Ability     string `json:"ability"`
 }
+
+type preloadPayload struct {
+	FileName string `json:"fileName"`
+	FileSize int    `json:"fileSize"`
+	FileType string `json:"fileType"`
+}
+
+type preloadResponse struct {
+	Success bool   `json:"success"`
+	Error   string `json:"error,omitempty"`
+	URL     string `json:"url"`
+}
+
+type File struct {
+	Name string      `json:"name"`
+	Size int         `json:"size"`
+	Data interface{} `json:"data"`
+}
+
+type UploadRequest struct {
+	Files              []File `json:"files"`
+	ACL                string `json:"acl"`
+	ContentDisposition string `json:"contentDisposition"`
+}
