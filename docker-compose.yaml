@@ -17,8 +17,6 @@ services:
       - ./python_api:/usr/app/
     ports:
       - "5000:5000"
-    networks:
-      - dev-net
     env_file:
       - .env
     environment:

@@ -1,5 +1,5 @@
 # Start from the official Go image
-FROM golang:1.23.3-alpine3.20
+FROM docker.io/golang:1.23.3-alpine3.20
 
 # Set the working directory in the container
 WORKDIR /app

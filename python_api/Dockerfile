@@ -1,5 +1,5 @@
 # backend/Dockerfile
-FROM python:3.12
+FROM docker.io/python:3.12
 
 WORKDIR /usr/app/
 
