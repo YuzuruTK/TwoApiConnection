@@ -1,68 +1,55 @@
-from flask import Flask, jsonify, request
-import os
-import json
-import uuid
+import requests # Pcs conversando na mesma lingua
+from flask import Flask # importando flask e cors           
 from flask_cors import CORS
+from os import getenv
+from dotenv import load_dotenv
 
-app = Flask(__name__)
-CORS(app)
-
-# Defina o caminho para a pasta 'json' e os arquivos 'classes.json' e 'turmas.json'
-json_folder = os.path.join(os.getcwd(), 'json')
-json_file = os.path.join(json_folder, 'classes.json')
-json_turmas = os.path.join(json_folder, 'turmas.json')
-
-# Pasta onde serão salvas as novas classes
-new_classes_folder = os.path.join(json_folder, 'new_classes')
-
-# Crie a pasta 'new_classes' se não existir
-if not os.path.exists(new_classes_folder):
-    os.makedirs(new_classes_folder)
+load_dotenv()
 
 
-@app.route('/get_classes', methods=['GET'])
-def get_classes():
-    try:
-        # Abrir o arquivo JSON e carregá-lo
-        with open(json_file, 'r') as file:
-            data = json.load(file)
-        # Retornar o conteúdo como JSON
-        return jsonify(data), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# CONSTANTES E VARIAVEIS --------------------------------------------------------------------------------------
 
+DEBUG_MODE = False # Defina como True para habilitar o modo de depuração
+LIST_FILES_URL = "https://api.uploadthing.com/v6/listFiles" # constante URL
+FILE_URL_PATTERN = "https://utfs.io/f/"
+APITOKEN = getenv("UPLOADTHING_TOKEN")
 
-@app.route('/get_turmas', methods=['GET'])
-def get_turmas():
-    try:
-        # Abrir o arquivo JSON e carregá-lo
-        with open(json_turmas, 'r') as file:
-            data = json.load(file)
-        # Retornar o conteúdo como JSON
-        return jsonify(data), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# FLASK -------------------------------------------------------------------------------------------
 
+app = Flask(__name__) # flask tranforma o teu pc num servidor http
+CORS(app) # cross origin fodace n sei pesquisar oq é depois (outros pcs podem usar esse link)
 
-@app.route('/receive_data', methods=['POST'])
-def receive_data():
-    try:
-        # Receber o JSON enviado na requisição POST
-        data = request.get_json()
+# Functions ---------------------------------------------------------------------------------------
+def request_items():
+    payload = {} # conteudo da caixa
+    headers = { # rotulo da caixa
+        "Content-Type": "application/json", # tipo de conteudo (json)
+        "X-Uploadthing-Api-Key": APITOKEN # token de acesso da api
+    }
+    # requisicao post pra url, com aqule payload e aquele header configurados acima 
+    response = requests.post(LIST_FILES_URL, json=payload, headers=headers) 
+    return response.json()
 
-        # Gerar um nome de arquivo único usando UUID
-        unique_filename = f"{uuid.uuid4()}.json"
-        file_path = os.path.join(new_classes_folder, unique_filename)
-        
-        # Salvar os dados no arquivo
-        with open(file_path, 'w') as file:
-            json.dump(data, file, indent=4)
-        
-        # Retornar uma resposta de sucesso
-        return jsonify({'message': 'Dados recebidos e salvos com sucesso!', 'filename': unique_filename}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# Routes ------------------------------------------------------------------------------------------
+@app.route("/items", methods=["GET"]) # definir as rotas de acesso ao servidor ; rota de acesso /items
+def get_items(): # funcao que define a lista de itens
+    items = request_items()
+    return {"items": list(map(lambda n: n["name"], items["files"]))}
 
+@app.route('/items/<id>', methods=['GET']) # rota de acesso /tems/id
+def get_item(id): # funcao que define como pega os itens
+    print(id)
+    fmt_id = (f"{id}.json", id)[id.endswith(".json")]
+
+    items = request_items()["files"]
+    wanted_item = next((d for d in items if d["name"] == fmt_id), None) # Procura primeiro item com nome igual a id
+    
+    if wanted_item is None:
+        return {"error": "Item not found"}, 404
+
+    resposta = requests.get(f"{FILE_URL_PATTERN}{wanted_item['key']}")
+    return resposta.json()
+    
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=DEBUG_MODE)
