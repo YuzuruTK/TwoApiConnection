@@ -45,7 +45,10 @@ UPLOADTHING_TOKEN="YOUR_API_KEY"
 ### Docker Compose
 
 ```bash
-docker-compose up
+docker compose up
+
+# Alternativa podman
+podman-compose up
 ```
 
 
