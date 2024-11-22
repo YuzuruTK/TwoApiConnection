@@ -23,9 +23,9 @@ Entregar no `github` uma pasta com o nome dos componentes contendo:
 
 | Integrantes: | Linguagens: | BaaS: | RESTful: |  
 | - | - | - | - | 
-| Gabriel Buron | Golang | Flask(Python) | net/http (Go) |
-| Gustavo Campos | Python | Uploadthing (storage) | Flask (Python) |
-| Juan Fricke | | | Requests (Python) |
+| Gabriel Buron | Golang | http (Go)  | net/http (Go) |
+| Gustavo Campos | Python | Flask(Python) | Flask (Python) |
+| Juan Fricke | | Uploadthing (storage) | Requests (Python) |
 | Stefani Arnold |
 
 # TwoApiConnection

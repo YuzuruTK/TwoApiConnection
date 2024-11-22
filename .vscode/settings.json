@@ -1,0 +1,8 @@
+{
+    "markdown.marp.themes": [
+        "./presentation/themes/kaisugi.css",
+        "./presentation/themes/rosee.css",
+        "./presentation/themes/custom.css"
+    ],
+    "markdown.marp.enableHtml": true,
+}

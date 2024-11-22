@@ -1,31 +1,26 @@
 ---
 marp: true
-theme: gaia
-class: 
-- gaia
-- lead
+theme: print-weaver
 paginate: true
+title: Trabalho 4 - Json e Baas
 ---
 
-<!-- Scoped style -->
-<style scoped>
-h1 {
-  color: blue;
-}
-</style>
+# TRABALHO 4 - JSON e BaaS
+Gabriel Buron, Gustavo Campos, Juan Fricke e Stefani Arnold
 
-# Blue text (only in the current slide page)
+![bg opacity:.05](images/pw_header_cut.png)
+
+---
+<!-- 
+footer: Gabriel Buron, Gustavo Campos, Juan Fricke, Stefani Arnold
+-->
+
+# Índice
+- Introdução
 
 ---
 
-<!-- Scoped style -->
-<style scoped>
-h1 {
-  color: red;
-}
-</style>
-# Red text
-## **Avaliação do trabalho:** 
+# Avaliação do trabalho:
 
 1. Escolher duas linguagens de programação  
 2. Analisar como JSON e requisições usando HTTP são implementados nas linguagens
@@ -34,8 +29,10 @@ h1 {
     b. Outra linguagem implementa o método GET
 
 ---
-
-## **Entrega do trabalho:**
+<!-- 
+header: Jorge
+-->
+## Entrega do trabalho:
 
 GRUPO de 2 a 4 componentes (criticidade na avaliação proporcional ao número de componentes)
 
@@ -49,7 +46,13 @@ c. dois prints da execução:
 
 ---
 
-### bataa
+<div class="mermaid center">
+graph TD;
+    A[jorge]-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
 
 ---
 
@@ -85,3 +88,12 @@ c. dois prints da execução:
 ---
 
 Please install the sass command line tools from http://sass-lang.com/install if you want to use Sass Formatter extension.
+
+---
+<!-- Slide dedicated to imports and configs -->
+
+<!-- Import mermaid module to work with -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
