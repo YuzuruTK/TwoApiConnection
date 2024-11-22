@@ -32,11 +32,11 @@ Entregar no `github` uma pasta com o nome dos componentes contendo:
 
 ## Executando Projeto
 
-### Env File
+### Arquivo de ambiente (.env)
 
-Go to UploadThing dashboard and create a new API key.
+Acesse o painel do UploadThing e crie uma nova chave de API.
 
-Create a `.env` file in the root of the project with the following content:
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 
 ```env
 UPLOADTHING_TOKEN="YOUR_API_KEY"
@@ -49,19 +49,13 @@ docker-compose up
 ```
 
 
-## Documentação Go API
-
-***Explicação API***    
-
-    GO: A api gerencia a criação de NPCs/Monstros do RPG Print Weaver.
-    
-    Python: Lê quantas fichas estão salvas no bucket(/itens) e lê o conteúdo de uma ficha específica(/intens/id).
+## Documentação APIs
+- **GO:** A api gerencia a criação de NPCs/Monstros do RPG Print Weaver.
+- **Python:** Lê quantas fichas estão salvas no bucket(/itens) e lê o conteúdo de uma ficha específica(/intens/id).
 
 ---
-### Endpoints
-
-
-## api go
+### Endpoints:
+## API Go
 ### `GET|POST:/generate/monster/beast`
 ### `GET|POST:/generate/monster/human`
 
@@ -72,16 +66,19 @@ docker-compose up
 }
 ```
 
-## api python
-### `GET|POST:/items`
+## API Python
+### `GET:/items`
 
-> example: 
+> exemplo de resposta: 
 
 ```json
 {"items":["human_monster_22-Nov-2024_231624.json","classes.json"]}
 
 ```
-### `GET|POST:/items/id`
+### `GET:/items/{id}>`
+
+> exemplo de resposta:
+
 ```json
 {"armor":"Filigree Tabard (as Medium Armor), a two-tone embroidered cloth coat.","disposition":"Curious","goals":"Recruit forces to hunt down a fearsome local legend.","ring":"A random ring from 41-50 (1d10) in Appendix B.","stats":{"dextery":4,"strength":8,"vitality":16,"willpower":4},"trait":"Knows one random Scroll. Any damage dealt by it instead heals an equal amount.","trinket":"Ankle Weight, Advantage on STR checks.","weapon":"Trident (as Medium Weapon). Deals Cold damage."}
 
