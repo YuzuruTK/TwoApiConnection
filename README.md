@@ -57,7 +57,7 @@ podman-compose up
 - **Python:** Lê quantas fichas estão salvas no bucket(/itens) e lê o conteúdo de uma ficha específica(/intens/id).
 
 ---
-### Endpoints:
+## Endpoints:
 ## API Go
 ### `GET|POST:/generate/monster/beast`
 ### `GET|POST:/generate/monster/human`
@@ -82,7 +82,7 @@ podman-compose up
     ]
 }
 ```
-### `GET:/items/{id}>`
+### `GET:/items/{id}`
 
 > exemplo de resposta:
 
