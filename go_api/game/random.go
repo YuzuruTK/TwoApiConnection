@@ -34,3 +34,13 @@ func getRandomHand() models.Hand {
 		Little:  constants.TypesOfFinger[RollDice(9, 1)-1],
 	}
 }
+
+// This function receives an SheetBaseStats Obj with vitality meaning its multiplier
+func getBaseStats(multipliers models.SheetBaseStats) models.SheetBaseStats {
+	return models.SheetBaseStats{
+		Vitality:  RollDice(10, multipliers.Vitality),
+		Strength:  multipliers.Strength,
+		Willpower: multipliers.Willpower,
+		Dextery:   multipliers.Dextery,
+	}
+}

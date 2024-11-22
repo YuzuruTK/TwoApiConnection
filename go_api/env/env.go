@@ -1,6 +1,7 @@
 package env
 
 import (
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -9,6 +10,7 @@ import (
 const dotenv_path = "../.env"
 
 func loadEnv() {
+	log.Println("Loading any env file existent... ")
 	godotenv.Load(dotenv_path)
 }
 
