@@ -75,15 +75,32 @@ podman-compose up
 > exemplo de resposta: 
 
 ```json
-{"items":["human_monster_22-Nov-2024_231624.json","classes.json"]}
-
+{
+    "items":[
+        "human_monster_22-Nov-2024_231624.json",
+        "classes.json"
+    ]
+}
 ```
 ### `GET:/items/{id}>`
 
 > exemplo de resposta:
 
 ```json
-{"armor":"Filigree Tabard (as Medium Armor), a two-tone embroidered cloth coat.","disposition":"Curious","goals":"Recruit forces to hunt down a fearsome local legend.","ring":"A random ring from 41-50 (1d10) in Appendix B.","stats":{"dextery":4,"strength":8,"vitality":16,"willpower":4},"trait":"Knows one random Scroll. Any damage dealt by it instead heals an equal amount.","trinket":"Ankle Weight, Advantage on STR checks.","weapon":"Trident (as Medium Weapon). Deals Cold damage."}
-
+{
+    "armor":"Filigree Tabard (as Medium Armor), a two-tone embroidered cloth coat.",
+    "disposition":"Curious",
+    "goals":"Recruit forces to hunt down a fearsome local legend.",
+    "ring":"A random ring from 41-50 (1d10) in Appendix B.",
+    "stats":{
+        "dextery":4,
+        "strength":8,
+        "vitality":16,
+        "willpower":4
+    },
+    "trait":"Knows one random Scroll. Any damage dealt by it instead heals an equal amount.",
+    "trinket":"Ankle Weight, Advantage on STR checks.",
+    "weapon":"Trident (as Medium Weapon). Deals Cold damage."
+}
 ```
 
