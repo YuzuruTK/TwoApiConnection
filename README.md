@@ -33,64 +33,57 @@ Entregar no `github` uma pasta com o nome dos componentes contendo:
 ## Executando Projeto
 
 ### Env File
+
+Go to UploadThing dashboard and create a new API key.
+
+Create a `.env` file in the root of the project with the following content:
+
+```env
+UPLOADTHING_TOKEN="YOUR_API_KEY"
+```
+
 ### Docker Compose
+
+```bash
+docker-compose up
+```
+
 
 ## Documentação Go API
 
-***Explicação API***
+***Explicação API***    
+
+    GO: A api gerencia a criação de NPCs/Monstros do RPG Print Weaver.
+    
+    Python: Lê quantas fichas estão salvas no bucket(/itens) e lê o conteúdo de uma ficha específica(/intens/id).
 
 ---
 ### Endpoints
 
-***Exemplo de documentação de outra API***
-### `POST:/admin/add-user`
-Adiciona um usuário a base de dados.
+
+## api go
+### `GET|POST:/generate/monster/beast`
+### `GET|POST:/generate/monster/human`
 
 **Corpo Requisição:**
 ```json
 {
-    "token": "<token de acesso do usuário>",
-    "username": "<string> nome de usuario",
-    "password": "<string> senha do usuario",
-    "isadmin": "(opcional: false) <bool> define se o usuário será administrador"
+    "save": true|false
 }
 ```
 
-**Resposta:**
+## api python
+### `GET|POST:/items`
+
+> example: 
+
 ```json
-{
-    "status": "<string> success | error",
-    "msg": "<string> mensagem de resposta"
-}
+{"items":["human_monster_22-Nov-2024_231624.json","classes.json"]}
+
 ```
-
-## Documentação Python API
-
-### Endpoints
-
-***Explicação API***
-
----
-### Endpoints
-
-***Exemplo de documentação de outra API***
-### `POST:/admin/add-user`
-Adiciona um usuário a base de dados.
-
-**Corpo Requisição:**
+### `GET|POST:/items/id`
 ```json
-{
-    "token": "<token de acesso do usuário>",
-    "username": "<string> nome de usuario",
-    "password": "<string> senha do usuario",
-    "isadmin": "(opcional: false) <bool> define se o usuário será administrador"
-}
+{"armor":"Filigree Tabard (as Medium Armor), a two-tone embroidered cloth coat.","disposition":"Curious","goals":"Recruit forces to hunt down a fearsome local legend.","ring":"A random ring from 41-50 (1d10) in Appendix B.","stats":{"dextery":4,"strength":8,"vitality":16,"willpower":4},"trait":"Knows one random Scroll. Any damage dealt by it instead heals an equal amount.","trinket":"Ankle Weight, Advantage on STR checks.","weapon":"Trident (as Medium Weapon). Deals Cold damage."}
+
 ```
 
-**Resposta:**
-```json
-{
-    "status": "<string> success | error",
-    "msg": "<string> mensagem de resposta"
-}
-```
